@@ -1,9 +1,11 @@
 import express, { Request, Response } from "express";
 import { ANIME, META, PROVIDERS_LIST } from "@consumet/extensions";
+import dotenv from "dotenv";
 
 const router = express.Router();
+dotenv.config();
 
-const tmdbApi = process.env.TMDB_API_KEY;
+const tmdbApi = process.env.TMDB_KEY;
 
 router.get('/search/:query', async (request: Request, reply: Response) => {
     const query = (request.params as { query: string }).query;
@@ -16,6 +18,7 @@ router.get('/search/:query', async (request: Request, reply: Response) => {
 });
 
 router.get('/info/:id', async (request: Request, reply: Response) => {
+    console.log('info', tmdbApi);
     const id = (request.params as { id: string }).id;
     const type = (request.query as { type: string }).type;
     const provider = (request.query as { provider?: string }).provider;
