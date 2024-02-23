@@ -54,6 +54,53 @@ router.get('/info/:id', async (request: Request, reply: Response) => {
     }
 });
 
+router.get('/recent-episodes', async (request: Request, reply: Response) => {
+    const provider = (request.query as { provider: 'gogoanime' | 'zoro' }).provider;
+    const page = (request.query as unknown as { page: number }).page;
+    const perPage = (request.query as unknown as { perPage: number }).perPage;
+
+    const anilist = generateAnilistMeta(provider);
+
+    const res = await anilist.fetchRecentEpisodes(provider, page, perPage);
+
+    reply.status(200).send(res);
+});
+
+router.get('/trending', async (request: Request, reply: Response) => {
+    const page = (request.query as unknown as { page: number }).page;
+    const perPage = (request.query as unknown as { perPage: number }).perPage;
+    const anilist = generateAnilistMeta();
+    reply.status(200).send(await anilist.fetchTrendingAnime(page, perPage));
+});
+
+router.get('/airing-schedule', async (request: Request, reply: Response) => {
+    const page = (request.query as unknown as { page: number }).page;
+    const perPage = (request.query as unknown as { perPage: number }).perPage;
+    const weekStart = (request.query as { weekStart: number | string }).weekStart;
+    const weekEnd = (request.query as { weekEnd: number | string }).weekEnd;
+    const notYetAired = (request.query as unknown as { notYetAired: boolean }).notYetAired;
+
+    const anilist = generateAnilistMeta();
+    const _weekStart = Math.ceil(Date.now() / 1000);
+
+    const res = await anilist.fetchAiringSchedule(
+        page ?? 1,
+        perPage ?? 20,
+        weekStart ?? _weekStart,
+        weekEnd ?? _weekStart + 604800,
+        notYetAired ?? true,
+    );
+
+    reply.status(200).send(res);
+});
+
+router.get('/popular', async (request: Request, reply: Response) => {
+    const page = (request.query as unknown as { page: number }).page;
+    const perPage = (request.query as unknown as { perPage: number }).perPage;
+    const anilist = generateAnilistMeta();
+    reply.status(200).send(await anilist.fetchPopularAnime(page, perPage));
+});
+
 const generateAnilistMeta = (provider: string | undefined = undefined): Anilist => {
     if (typeof provider !== 'undefined') {
         let possibleProvider = PROVIDERS_LIST.ANIME.find(
