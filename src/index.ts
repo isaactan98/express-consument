@@ -10,6 +10,9 @@ const app: Express = express();
 const port = process.env.PORT || 3000;
 
 app.use("/anime", anime)
+app.use("/", (req: Request, res: Response) => {
+    res.set("Access-Control-Allow-Origi", "*");
+});
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Express + TypeScript Server");
