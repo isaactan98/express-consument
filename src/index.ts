@@ -2,10 +2,14 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 
+import anime from "./routes/anime";
+
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
+
+app.use("/anime", anime)
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Express + TypeScript Server");
