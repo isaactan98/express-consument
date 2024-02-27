@@ -6,6 +6,8 @@ import cors from "cors";
 import anime from "./routes/anime";
 import meta from "./routes/meta";
 
+import manga from "./routes/manga";
+
 dotenv.config();
 
 const app: Express = express();
@@ -21,6 +23,8 @@ app.use(cors(options));
 
 app.use("/anime", anime)
 app.use("/meta", meta)
+
+app.use("/manga", manga)
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Express + TypeScript Server");
