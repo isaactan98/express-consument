@@ -2,6 +2,7 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import path from "path";
 
 import anime from "./routes/anime";
 import meta from "./routes/meta";
@@ -11,7 +12,7 @@ import manga from "./routes/manga";
 dotenv.config();
 
 const app: Express = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 // const allowedOrigins = ["*"];
 
@@ -27,7 +28,8 @@ app.use("/meta", meta)
 app.use("/manga", manga)
 
 app.get("/", (req: Request, res: Response) => {
-    res.send("Express + TypeScript Server");
+    const htmlPath = path.join(__dirname, 'index.html');
+    res.sendFile(htmlPath);
 });
 
 app.listen(port, () => {
