@@ -9,6 +9,8 @@ import meta from "./routes/meta";
 
 import manga from "./routes/manga";
 
+import news from "./routes/news";
+
 dotenv.config();
 
 const app: Express = express();
@@ -26,6 +28,8 @@ app.use("/anime", anime)
 app.use("/meta", meta)
 
 app.use("/manga", manga)
+
+app.use("/news", news)
 
 app.get("/", (req: Request, res: Response) => {
     const htmlPath = path.join(__dirname, 'index.html');
