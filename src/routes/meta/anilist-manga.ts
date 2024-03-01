@@ -38,7 +38,10 @@ router.get('/info/:id', async (request: Request, reply: Response) => {
 
     try {
         const res = await anilist
-            .fetchMangaInfo(id)
+            .fetchMangaInfo(id).then((res) => {
+                console.log(`info : ${JSON.stringify(res)}`);
+                return res;
+            })
             .catch((err) => reply.status(404).send({ message: err }));
 
         reply.status(200).send(res);
@@ -66,7 +69,10 @@ router.get('/read/:chapterId', async (request: Request, reply: Response) => {
 
     try {
         const res = await anilist
-            .fetchChapterPages(chapterId)
+            .fetchChapterPages(chapterId).then((res) => {
+                console.log(`chapter : ${JSON.stringify(res)}`);
+                return res;
+            })
             .catch((err: Error) => reply.status(404).send({ message: err.message }));
 
         reply.status(200).send(res);
