@@ -38,12 +38,9 @@ router.get('/info/:id', async (request: Request, reply: Response) => {
 
     console.log('fetching manga info ', anilist);
     const seen = [] as any[];
-    const res = await anilist
-        .fetchMangaInfo(id).then((res) => {
-            console.log('res :: ', res);
-            return res;
-        })
-        .catch((err) => reply.status(400).send({ message: err }));
+    const res = await anilist.fetchMangaInfo(id).catch((err) => reply.status(400).send({ message: err }));
+
+    console.log('res :: ', res);
 
     const jsonString = JSON.stringify(res, function (key, value) {
         if (typeof value === 'object' && value !== null) {
