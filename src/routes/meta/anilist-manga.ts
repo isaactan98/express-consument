@@ -37,13 +37,24 @@ router.get('/info/:id', async (request: Request, reply: Response) => {
         return reply.status(400).send({ message: 'id is required' });
 
     console.log('fetching manga info ', anilist);
+    const seen = [] as any[];
     const res = await anilist
         .fetchMangaInfo(id).then((res) => {
             console.log('res :: ', res);
             return res;
         })
         .catch((err) => reply.status(400).send({ message: err }));
-    reply.status(200).send(res);
+
+    const jsonString = JSON.stringify(res, function (key, value) {
+        if (typeof value === 'object' && value !== null) {
+            if (seen.includes(value)) {
+                return '[Circular Reference]';
+            }
+            seen.push(value);
+        }
+        return value;
+    });
+    reply.status(200).send(jsonString);
 });
 
 router.get('/read/:chapterId', async (request: Request, reply: Response) => {
