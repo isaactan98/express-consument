@@ -37,7 +37,9 @@ router.get('/info/:id', async (request: Request, reply: Response) => {
         return reply.status(400).send({ message: 'id is required' });
 
     try {
-        const res = await anilist.fetchMangaInfo(id);
+        const res = await anilist
+            .fetchMangaInfo(id)
+            .catch((err) => reply.status(400).send({ message: err }));
 
         reply.status(200).send(res);
         anilist = new META.Anilist.Manga();
@@ -63,7 +65,9 @@ router.get('/read/:chapterId', async (request: Request, reply: Response) => {
         return reply.status(400).send({ message: 'chapterId is required' });
 
     try {
-        const res = await anilist.fetchChapterPages(chapterId);
+        const res = await anilist
+            .fetchChapterPages(chapterId)
+            .catch((err: Error) => reply.status(400).send({ message: err.message }));
 
         anilist = new META.Anilist.Manga();
         reply.status(200).send(res);
