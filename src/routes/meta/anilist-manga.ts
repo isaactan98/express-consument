@@ -43,9 +43,10 @@ router.get('/info/:id', async (request: Request, reply: Response) => {
 
         reply.status(200).send(res);
     } catch (err) {
-        reply
-            .status(500)
-            .send({ message: 'Something went wrong. Please try again later.' });
+        console.log(err);
+        // reply
+        //     .status(500)
+        //     .send({ message: 'Something went wrong. Please try again later.' });
     }
 });
 
@@ -70,9 +71,10 @@ router.get('/read/:chapterId', async (request: Request, reply: Response) => {
 
         reply.status(200).send(res);
     } catch (err) {
-        reply
-            .status(500)
-            .send({ message: 'Something went wrong. Please try again later.' });
+        console.log(err);
+        // reply
+        //     .status(500)
+        //     .send({ message: 'Something went wrong. Please try again later.' });
     }
 });
 
