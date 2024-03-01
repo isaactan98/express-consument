@@ -46,9 +46,8 @@ router.get('/info/:id', async (request: Request, reply: Response) => {
     else fetchFiller = false;
 
     try {
-        reply.status(200).send(
-            await anilist.fetchAnimeInfo(id, isDub as boolean, fetchFiller as boolean),
-        );
+        const res = await anilist.fetchAnimeInfo(id, isDub as boolean, fetchFiller as boolean);
+        reply.status(200).send(res);
     } catch (err: any) {
         reply.status(500).send({ message: err.message });
     }
