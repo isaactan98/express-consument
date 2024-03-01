@@ -36,22 +36,10 @@ router.get('/info/:id', async (request: Request, reply: Response) => {
     if (typeof id === 'undefined')
         return reply.status(400).send({ message: 'id is required' });
 
-    console.log('fetching manga info ', anilist);
-    const seen = [] as any[];
     const res = await anilist.fetchMangaInfo(id).catch((err) => reply.status(400).send({ message: err }));
+    console.log('res :: ', JSON.stringify(res));
 
-    console.log('res :: ', res);
-
-    const jsonString = JSON.stringify(res, function (key, value) {
-        if (typeof value === 'object' && value !== null) {
-            if (seen.includes(value)) {
-                return '[Circular Reference]';
-            }
-            seen.push(value);
-        }
-        return value;
-    });
-    reply.status(200).send(jsonString);
+    reply.status(200).send(res);
 });
 
 router.get('/read/:chapterId', async (request: Request, reply: Response) => {
