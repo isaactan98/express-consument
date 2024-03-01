@@ -37,18 +37,13 @@ router.get('/info/:id', async (request: Request, reply: Response) => {
         return reply.status(400).send({ message: 'id is required' });
 
     console.log('fetching manga info ', anilist);
-    try {
-        const res = await anilist
-            .fetchMangaInfo(id)
-            .catch((err) => reply.status(400).send({ message: err }));
-
-        reply.status(200).send(res);
-        // anilist = new META.Anilist.Manga();
-    } catch (err) {
-        reply
-            .status(500)
-            .send({ message: 'Something went wrong. Please try again later.' });
-    }
+    const res = await anilist
+        .fetchMangaInfo(id).then((res) => {
+            console.log('res :: ', res);
+            return res;
+        })
+        .catch((err) => reply.status(400).send({ message: err }));
+    reply.status(200).send(res);
 });
 
 router.get('/read/:chapterId', async (request: Request, reply: Response) => {
