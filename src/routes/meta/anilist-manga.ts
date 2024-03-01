@@ -37,19 +37,14 @@ router.get('/info/:id', async (request: Request, reply: Response) => {
         return reply.status(400).send({ message: 'id is required' });
 
     try {
-        const res = await anilist
-            .fetchMangaInfo(id).then((res) => {
-                console.log(`info : ${JSON.stringify(res)}`);
-                return res;
-            })
-            .catch((err) => reply.status(404).send({ message: err }));
+        const res = await anilist.fetchMangaInfo(id);
 
-        reply.status(200).send(JSON.stringify(res));
+        reply.status(200).send(res);
+        anilist = new META.Anilist.Manga();
     } catch (err) {
-        console.log(err);
-        // reply
-        //     .status(500)
-        //     .send({ message: 'Something went wrong. Please try again later.' });
+        reply
+            .status(500)
+            .send({ message: 'Something went wrong. Please try again later.' });
     }
 });
 
@@ -68,19 +63,14 @@ router.get('/read/:chapterId', async (request: Request, reply: Response) => {
         return reply.status(400).send({ message: 'chapterId is required' });
 
     try {
-        const res = await anilist
-            .fetchChapterPages(chapterId).then((res) => {
-                console.log(`chapter : ${JSON.stringify(res)}`);
-                return res;
-            })
-            .catch((err: Error) => reply.status(404).send({ message: err.message }));
+        const res = await anilist.fetchChapterPages(chapterId);
 
-        reply.status(200).send(JSON.stringify(res));
+        anilist = new META.Anilist.Manga();
+        reply.status(200).send(res);
     } catch (err) {
-        console.log(err);
-        // reply
-        //     .status(500)
-        //     .send({ message: 'Something went wrong. Please try again later.' });
+        reply
+            .status(500)
+            .send({ message: 'Something went wrong. Please try again later.' });
     }
 });
 
