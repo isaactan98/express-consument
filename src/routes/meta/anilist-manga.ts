@@ -14,7 +14,7 @@ router.get('/', (_, rp) => {
     });
 });
 
-router.get('/:query', async (request: Request, reply: Response) => {
+router.get('/search/:query', async (request: Request, reply: Response) => {
     const query = (request.params as { query: string }).query;
 
     const res = await anilist.search(query);
