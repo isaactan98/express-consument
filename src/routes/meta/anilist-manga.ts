@@ -42,7 +42,6 @@ router.get('/info/:id', async (request: Request, reply: Response) => {
             .catch((err) => reply.status(404).send({ message: err }));
 
         reply.status(200).send(res);
-        anilist = new META.Anilist.Manga();
     } catch (err) {
         reply
             .status(500)
@@ -69,7 +68,6 @@ router.get('/read/:chapterId', async (request: Request, reply: Response) => {
             .fetchChapterPages(chapterId)
             .catch((err: Error) => reply.status(404).send({ message: err.message }));
 
-        anilist = new META.Anilist.Manga();
         reply.status(200).send(res);
     } catch (err) {
         reply
