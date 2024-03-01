@@ -44,7 +44,7 @@ router.get('/info/:id', async (request: Request, reply: Response) => {
             })
             .catch((err) => reply.status(404).send({ message: err }));
 
-        reply.status(200).send(res);
+        reply.status(200).send(JSON.stringify(res));
     } catch (err) {
         console.log(err);
         // reply
@@ -75,7 +75,7 @@ router.get('/read/:chapterId', async (request: Request, reply: Response) => {
             })
             .catch((err: Error) => reply.status(404).send({ message: err.message }));
 
-        reply.status(200).send(res);
+        reply.status(200).send(JSON.stringify(res));
     } catch (err) {
         console.log(err);
         // reply
