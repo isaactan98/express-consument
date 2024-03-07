@@ -14,7 +14,7 @@ router.get('/', (_, rp) => {
     });
 });
 
-router.get('/:query', async (request: Request, reply: Response) => {
+router.get('/search/:query', async (request: Request, reply: Response) => {
     const query = (request.params as { query: string }).query;
     const page = (request.query as unknown as { page: number }).page;
     const res = await mangadex.search(query, page);
