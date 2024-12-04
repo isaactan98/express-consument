@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from "express";
+import express, { type Express, type Request, type Response } from "express";
 import dotenv from "dotenv";
 import { ANIME } from "@consumet/extensions";
 
@@ -33,7 +33,7 @@ router.get("/search/:query", async (req: Request, res: Response) => {
 
     if (!query) return res.status(400).json({ error: "Title is required" });
 
-    const data = await gogoanime.search(query.toString(), parseInt(page?.toString() ?? "1"));
+    const data = await gogoanime.search(query.toString(), Number.parseInt(page?.toString() ?? "1"));
     res.json(data);
 });
 

@@ -1,8 +1,8 @@
 // src/index.js
-import express, { Express, Request, Response } from "express";
+import express, { type Express, type Request, type Response } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import path from "path";
+import path from "node:path";
 
 import anime from "./routes/anime";
 import meta from "./routes/meta";
